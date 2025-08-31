@@ -62,7 +62,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="8" class="px-6 py-4 whitespace-nowrap text-center text-gray-500">
-                                            Data inventaris masih kosong.
+                                            Data inventaris masih kosong ges
                                         </td>
                                     </tr>
                                 @endforelse
