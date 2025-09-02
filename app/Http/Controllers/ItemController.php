@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Item;
+use App\Http\Requests\StoreItemRequest; // Diimpor
+use App\Http\Requests\UpdateItemRequest; // Diimpor
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar semua item dengan paginasi.
      */
     public function index()
     {
-        $items = Item::latest()->paginate(10); // Ambil data terbaru dengan paginasi
+        $items = Item::latest()->paginate(10);
         return view('items.index', compact('items'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan formulir untuk membuat item baru.
      */
     public function create()
     {
@@ -25,26 +28,20 @@ class ItemController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan item baru ke dalam database.
+     * Validasi ditangani oleh StoreItemRequest.
      */
-    public function store(Request $request)
+    public function store(StoreItemRequest $request)
     {
-        // Validasi input
-        $request->validate([
-            'kode_barang' => 'required|string|unique:items|max:255',
-            'nama_barang' => 'required|string|max:255',
-            'jumlah' => 'required|integer|min:0',
-            'harga' => 'required|numeric|min:0',
-        ]);
-
-        Item::create($request->all());
+        // Data yang masuk sudah pasti valid
+        Item::create($request->validated());
 
         return redirect()->route('items.index')
                          ->with('success', 'Item berhasil ditambahkan.');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan detail satu item.
      */
     public function show(Item $item)
     {
@@ -52,7 +49,7 @@ class ItemController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan formulir untuk mengedit item.
      */
     public function edit(Item $item)
     {
@@ -60,26 +57,20 @@ class ItemController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui item yang ada di database.
+     * Validasi ditangani oleh UpdateItemRequest.
      */
-    public function update(Request $request, Item $item)
+    public function update(UpdateItemRequest $request, Item $item)
     {
-        // Validasi input
-        $request->validate([
-            'kode_barang' => 'required|string|max:255|unique:items,kode_barang,'.$item->id,
-            'nama_barang' => 'required|string|max:255',
-            'jumlah' => 'required|integer|min:0',
-            'harga' => 'required|numeric|min:0',
-        ]);
-
-        $item->update($request->all());
+        // Data yang masuk sudah pasti valid
+        $item->update($request->validated());
 
         return redirect()->route('items.index')
                          ->with('success', 'Item berhasil diperbarui.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus item dari database.
      */
     public function destroy(Item $item)
     {
@@ -87,5 +78,27 @@ class ItemController extends Controller
 
         return redirect()->route('items.index')
                          ->with('success', 'Item berhasil dihapus.');
+    }
+    /**
+     * Menghapus beberapa item yang dipilih.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function bulkDestroy(Request $request)
+    {
+        // Validasi jika tidak ada item yang dipilih
+        $request->validate([
+            'selected_items' => 'required|array',
+        ]);
+
+        $selectedIds = $request->input('selected_items');
+
+        // Hapus item berdasarkan ID yang dipilih
+        Item::whereIn('id', $selectedIds)->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('items.index')
+                         ->with('success', 'Item yang dipilih berhasil dihapus.');
     }
 }

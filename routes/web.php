@@ -22,6 +22,8 @@ Route::get('/', function () {
     return view('dashboard', compact('items')); // Mengirim data ke view
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Route untuk hapus massal (BARU)
+Route::delete('items/bulk-destroy', [ItemController::class, 'bulkDestroy'])->name('items.bulkDestroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
