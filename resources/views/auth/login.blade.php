@@ -15,8 +15,64 @@
         .animate-zoom-in {
             animation: zoomIn 0.5s ease-out forwards;
         }
-    </style>
 
+           /* ... (kode keyframes zoomIn kamu) ... */
+
+    /* CSS untuk Bentuk Mengambang */
+    .background-shapes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Penting agar berada di belakang konten */
+        overflow: hidden;
+    }
+
+    .background-shapes span {
+        position: absolute;
+        display: block;
+        list-style: none;
+        width: 20px;
+        height: 20px;
+        background: rgba(255, 255, 255, 0.1); /* Warna bentuk */
+        animation: floatUp 25s linear infinite;
+        bottom: -150px; /* Posisi awal di luar layar */
+        border-radius: 50%; /* Membuatnya menjadi lingkaran */
+    }
+
+    /* Variasi ukuran, posisi, dan kecepatan untuk setiap bentuk */
+    .background-shapes span:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+    .background-shapes span:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+    .background-shapes span:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
+    .background-shapes span:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+    .background-shapes span:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+    .background-shapes span:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
+    .background-shapes span:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
+    .background-shapes span:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
+
+    @keyframes floatUp {
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100vh) rotate(720deg);
+            opacity: 0;
+        }
+    }
+    </style>
+ {{-- TAMBAHKAN KODE BENTUK DI SINI --}}
+    <div class="background-shapes">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
     {{-- Div pembungkus untuk menerapkan animasi --}}
     <div class="animate-zoom-in">
 
