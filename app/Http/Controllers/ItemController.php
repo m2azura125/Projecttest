@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Http\Requests\StoreItemRequest; // Diimpor
 use App\Http\Requests\UpdateItemRequest; // Diimpor
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -17,6 +18,14 @@ class ItemController extends Controller
     {
         $items = Item::latest()->paginate(10);
         return view('items.index', compact('items'));
+    }
+    public function summary()
+    {
+        // Ambil semua data dari database view 'item_summaries'
+        $summaries = DB::table('item_summaries')->paginate(10);
+
+        // Kirim data ke view baru
+        return view('items.summary', compact('summaries'));
     }
 
     /**

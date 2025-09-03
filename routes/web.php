@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 // Route untuk hapus massal (BARU)
 Route::delete('items/bulk-destroy', [ItemController::class, 'bulkDestroy'])->name('items.bulkDestroy');
-
+Route::get('/items/summary', [ItemController::class, 'summary'])->name('items.summary');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
