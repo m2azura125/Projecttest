@@ -19,6 +19,14 @@
 
     {{-- Div pembungkus untuk menerapkan animasi --}}
     <div class="animate-zoom-in">
+
+        {{-- LOGO SEKARANG DITAMBAHKAN DI SINI --}}
+        <div class="flex justify-center mb-6">
+            <a href="/">
+                <x-application-logo class="w-40 fill-current text-gray-500" />
+            </a>
+        </div>
+
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
         <form method="POST" action="{{ route('login') }}">

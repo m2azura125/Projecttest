@@ -32,5 +32,8 @@
                 {{ $slot }}
             </main>
         </div>
+
+        {{-- TAMBAHKAN BARIS INI UNTUK MEMUAT SCRIPT DARI HALAMAN LAIN --}}
+        @stack('scripts')
     </body>
 </html>
