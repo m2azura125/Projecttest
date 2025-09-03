@@ -28,6 +28,7 @@
                     background: linear-gradient(to right, #111827 50%, #1f2937 50%);
                 }
             }
+            
         </style>
     </head>
     <body class="font-sans text-gray-900 antialiased">
